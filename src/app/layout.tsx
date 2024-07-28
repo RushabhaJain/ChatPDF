@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
 import { Suspense } from "react";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,17 +16,20 @@ export const metadata: Metadata = {
   description: "Chat with your PDF within minutes",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
   return (
     <html lang="en">
       <Providers>
         <body className={cn("bg-zinc-50", inter.className)}>
           <Toaster />
-          <Navbar />
+          <Navbar user={user} />
           <Suspense fallback={null}>
             {children}
           </Suspense>

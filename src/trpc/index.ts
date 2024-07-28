@@ -209,6 +209,9 @@ export const appRouter = router({
       console.log(error);
     }
     
+  }),
+  getUserSubscriptionPlan: privateProcedure.query(async ({ ctx }) => {
+    return await getUserSubscriptionPlan();
   })
 });
 

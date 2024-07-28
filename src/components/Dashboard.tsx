@@ -41,7 +41,7 @@ const Dashboard = () => {
                         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                         .map(file => {
                             return (
-                                <li className="col-span-1 flex divide-y divide-gray-200 flex-col pt-6 px-6 shadow transition-all hover:shadow-md bg-white">
+                                <li key={file.id} className="col-span-1 flex divide-y divide-gray-200 flex-col pt-6 px-6 shadow transition-all hover:shadow-md bg-white">
                                     <Link href={`/dashboard/${file.id}`} className="flex gap-2 items-center">
                                         <div className="h-10 w-10 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500" />
                                         <h3 className="flex-1 text-lg font-semibold truncate text-zinc-900">{file.name}</h3>

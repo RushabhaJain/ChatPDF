@@ -77,7 +77,7 @@ const PricingPage = async () => {
       <div className="flex flex-col items-center mt-20 mx-auto max-w-lg">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold">Pricing</h1>
         <p className="text-gray-600 sm:text-lg text-center mt-4">
-          Whether you're just trying out our service or need more, we've got you
+          Whether you&apos;re just trying out our service or need more, we&apos;ve got you
           covered.
         </p>
       </div>

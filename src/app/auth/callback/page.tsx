@@ -9,9 +9,7 @@ const Page = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const origin = searchParams.get('origin');
-    const { data, isLoading, isSuccess, error, isError } = trpc.authCallback.useQuery(undefined, {
-       
-    });
+    const { data, isSuccess, error, isError } = trpc.authCallback.useQuery();
 
     useEffect(() => {
         if (isSuccess && data.success) {

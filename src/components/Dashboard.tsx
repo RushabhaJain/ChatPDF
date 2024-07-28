@@ -38,7 +38,7 @@ const Dashboard = () => {
                 ? (
                     <ul className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {files
-                        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                        .sort((a, b) => Number(new Date(b.createdAt)) - Number(new Date(a.createdAt)))
                         .map(file => {
                             return (
                                 <li key={file.id} className="col-span-1 flex divide-y divide-gray-200 flex-col pt-6 px-6 shadow transition-all hover:shadow-md bg-white">

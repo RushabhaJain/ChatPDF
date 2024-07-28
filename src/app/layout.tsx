@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
         <body className={cn("bg-zinc-50", inter.className)}>
           <Toaster />
           <Navbar />
-          {children}
+          <Suspense fallback={null}>
+            {children}
+          </Suspense>
         </body>
       </Providers>
     </html>

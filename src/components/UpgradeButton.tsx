@@ -6,9 +6,11 @@ import { trpc } from "@/app/_trpc/client";
 
 const UpgradeButton = () => {
     const { mutate: createStripeSession, isPending } = trpc.createStripeSession.useMutation({
-        onSuccess: ({ url }) => {
-            console.log("URL: " + url)
-            window.location.href = url ?? "/dashboard/billing"
+        onSuccess: (data) => {
+            if (data && data.url) {
+                console.log("URL: " + data.url)
+                window.location.href = data.url ?? "/dashboard/billing"
+            }
         }
     })
     return (

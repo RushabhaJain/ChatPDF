@@ -4,11 +4,10 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "./ui/dropdown-menu";
-import { Avatar, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Icons } from "./Icons";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 import { Gem, Loader2 } from "lucide-react";

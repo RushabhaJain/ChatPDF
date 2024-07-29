@@ -26,6 +26,8 @@ const Dashboard = () => {
             setCurrentlyDeletingFile(id)
         }
     })
+    console.log("Files")
+    console.log(files);
     return (
         <MaxWidthWrapper className="mt-24">
             <div className="flex flex-col border-b border-gray-200 pb-5 gap-2 items-start justify-between sm:flex-row sm:items-center sm:justify-between">

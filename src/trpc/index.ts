@@ -185,6 +185,7 @@ export const appRouter = router({
       }
     }
     console.log("Navigation to checkout page...")
+    console.log("Billing URL: ", billingUrl);
     try {
       const stripeSession = await stripe.checkout.sessions.create({
         success_url: billingUrl,
@@ -201,7 +202,6 @@ export const appRouter = router({
           userId
         }
       });
-  
       return {
         url: stripeSession.url,
       };

@@ -174,15 +174,22 @@ export const appRouter = router({
       code: "UNAUTHORIZED"
     }) 
     const subscriptionPlan = await getUserSubscriptionPlan();
-    console.log('Subscription plan:', subscriptionPlan)
     if (subscriptionPlan.isSubscribed && dbUser?.stripeCustomerId) {
-      const stripeSession = await stripe.billingPortal.sessions.create({
-        customer: dbUser.stripeCustomerId,
-        return_url: billingUrl
-      });
-      return {
-        url: stripeSession.url
+      try {
+        const stripeSession = await stripe.billingPortal.sessions.create({
+          customer: dbUser.stripeCustomerId,
+          return_url: billingUrl
+        });
+        console.log('- Stripe Session --')
+        console.log(stripeSession)
+        return {
+          url: stripeSession.url
+        }
+      } catch (error) {
+        console.log('Error while creating billing portal session')
+        console.log(error);
       }
+      
     }
     console.log("Navigation to checkout page...")
     console.log("Billing URL: ", billingUrl);

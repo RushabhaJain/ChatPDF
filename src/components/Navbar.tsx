@@ -7,15 +7,17 @@ import { LoginLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs";
 import { ArrowRight } from "lucide-react";
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 import UserNavButton from "./UserNavButton";
+import MobileNav from "./MobileNav";
 
 const Navbar = ({ user }: { user: KindeUser | null }) => {
   return (
-    <nav className="sticky h-14 top-0 inset-x-0 w-full border-b border-gray-200 bg-white/75 backdrop-blur-md">
+    <nav className="sticky z-30 h-14 top-0 inset-x-0 w-full border-b border-gray-200 bg-white/75 backdrop-blur-md">
       <MaxWidthWrapper className="h-full">
         <div className="flex h-full justify-between items-center">
-          <Link href="/" className="font-semibold">
+          <Link href="/" className="font-semibold z-40">
             ChatPDF.
           </Link>
+          <MobileNav isAuth={!!user} />
           <div className="hidden sm:flex space-x-4">
             {!user && (
               <>

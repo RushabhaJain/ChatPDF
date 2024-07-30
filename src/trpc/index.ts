@@ -160,66 +160,52 @@ export const appRouter = router({
     }),
   createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
     const { userId } = ctx;
-   const billingUrl = absoluteUrl("/dashboard/billing");
+    const billingUrl = absoluteUrl("/dashboard/billing");
     if (!userId)
       throw new TRPCError({
         code: "UNAUTHORIZED",
       });
     const dbUser = await db.user.findFirst({
       where: {
-        id: userId
-      }
+        id: userId,
+      },
     });
-    if (!dbUser) new TRPCError({
-      code: "UNAUTHORIZED"
-    }) 
+    if (!dbUser)
+      new TRPCError({
+        code: "UNAUTHORIZED",
+      });
     const subscriptionPlan = await getUserSubscriptionPlan();
     if (subscriptionPlan.isSubscribed && dbUser?.stripeCustomerId) {
-      try {
-        const stripeSession = await stripe.billingPortal.sessions.create({
-          customer: dbUser.stripeCustomerId,
-          return_url: billingUrl
-        });
-        console.log('- Stripe Session --')
-        console.log(stripeSession)
-        return {
-          url: stripeSession.url
-        }
-      } catch (error) {
-        console.log('Error while creating billing portal session')
-        console.log(error);
-      }
-      
-    }
-    console.log("Navigation to checkout page...")
-    console.log("Billing URL: ", billingUrl);
-    try {
-      const stripeSession = await stripe.checkout.sessions.create({
-        success_url: billingUrl,
-        cancel_url: billingUrl,
-        payment_method_types: ["card"],
-        mode: "subscription",
-        line_items: [
-          {
-            price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds.test,
-            quantity: 1
-          }
-        ],
-        metadata: {
-          userId
-        }
+      const stripeSession = await stripe.billingPortal.sessions.create({
+        customer: dbUser.stripeCustomerId,
+        return_url: billingUrl,
       });
       return {
         url: stripeSession.url,
       };
-    } catch(error) {
-      console.log(error);
     }
-    
+    const stripeSession = await stripe.checkout.sessions.create({
+      success_url: billingUrl,
+      cancel_url: billingUrl,
+      payment_method_types: ["card"],
+      mode: "subscription",
+      line_items: [
+        {
+          price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds.test,
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        userId,
+      },
+    });
+    return {
+      url: stripeSession.url,
+    };
   }),
   getUserSubscriptionPlan: privateProcedure.query(async ({ ctx }) => {
     return await getUserSubscriptionPlan();
-  })
+  }),
 });
 
 export type AppRouter = typeof appRouter;

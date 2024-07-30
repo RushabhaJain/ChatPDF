@@ -10,8 +10,13 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 
-const Dashboard = () => {
+interface DashboardProps {
+    subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>
+}
+
+const Dashboard = ({ subscriptionPlan }: DashboardProps) => {
     const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<string | null>(null);
     const utils = trpc.useUtils();
     const { data: files, isLoading } = trpc.getUserFiles.useQuery();
@@ -25,14 +30,12 @@ const Dashboard = () => {
         onMutate: ({ id }) => {
             setCurrentlyDeletingFile(id)
         }
-    })
-    console.log("Files")
-    console.log(files);
+    });
     return (
         <MaxWidthWrapper className="mt-24">
             <div className="flex flex-col border-b border-gray-200 pb-5 gap-2 items-start justify-between sm:flex-row sm:items-center sm:justify-between">
                 <h1 className="text-5xl font-semibold text-gray-900">My files</h1>
-                <UploadButton />
+                <UploadButton isSubscribed={subscriptionPlan.isSubscribed} />
             </div>
 
             {

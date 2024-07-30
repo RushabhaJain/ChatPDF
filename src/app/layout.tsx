@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import 'simplebar-react/dist/simplebar.min.css';
-import { cn } from "@/lib/utils";
+import { cn, constructMetadata } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
@@ -11,10 +11,7 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "ChatPDF - the SaaS",
-  description: "Chat with your PDF within minutes",
-};
+export const metadata: Metadata = constructMetadata();
 
 export default async function RootLayout({
   children,

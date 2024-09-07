@@ -8,6 +8,7 @@ import Providers from "@/components/Providers";
 import { Toaster } from "@/components/ui/toaster";
 import { Suspense } from "react";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import PlausibleProvider from 'next-plausible'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <PlausibleProvider domain="chat-pdf-jm1h.vercel.app" enabled={true} trackLocalhost={true} />
+      </head>
       <Providers>
         <body className={cn("bg-zinc-50", inter.className)}>
           <Toaster />
